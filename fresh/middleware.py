@@ -74,7 +74,12 @@ class FreshMiddleware(object):
 
         observer.start()
 
+    __REGISTERED_ = False
     def __init__(self):
-        if settings.DEBUG:
-            self.watcher()
+        if not settings.DEBUG:
+            return 
+        if FreshMiddleware.__REGISTERED_:
+            return
+        self.watcher()
+        FreshMiddleware.__REGISTERED_ = True        
 
