@@ -23,7 +23,7 @@ class RefreshEventHandler(FileSystemEventHandler):
             '.js',
             '.css',
         ])
-    
+
         for extension in ACCEPTED_EXTENSIONS:
             if event.src_path.lower().endswith(extension):
                 fresh = True
@@ -36,7 +36,12 @@ class FreshMiddleware(object):
             return response
 
         global fresh
-        mimetype = response._headers['content-type'][1]
+        try:
+            mimetype = response._headers['content-type'][1]
+        except KeyError:
+            # HttpResponseNotModified doesn't have _headers
+            return response
+
         IGNORED_PAGES = getattr(settings, 'FRESH_IGNORED_PAGES', [
             '/admin/',
             '/admin_keywords_submit/',
@@ -50,7 +55,7 @@ class FreshMiddleware(object):
         if not ignored:
             if mimetype == 'application/json':
                 items = json.loads(response.content)
-                if fresh and items.get('fresh') != None:
+                if fresh and items.get('fresh') is not None:
                     fresh = False
                     items['fresh'] = True
                     response.content = json.dumps(items)
@@ -64,7 +69,6 @@ class FreshMiddleware(object):
 
         return response
 
-
     def watcher(self):
         observer = Observer()
 
@@ -75,11 +79,11 @@ class FreshMiddleware(object):
         observer.start()
 
     __REGISTERED_ = False
+
     def __init__(self):
         if not settings.DEBUG:
-            return 
+            return
         if FreshMiddleware.__REGISTERED_:
             return
         self.watcher()
-        FreshMiddleware.__REGISTERED_ = True        
-
+        FreshMiddleware.__REGISTERED_ = True
