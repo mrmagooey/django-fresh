@@ -19,6 +19,7 @@
       console.log('startRefresh onerror', e);
       window.setTimeout(startRefresh, 500);
     };
+    req.send();
   }
 
   function checkRefresh() {
