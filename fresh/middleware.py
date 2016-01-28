@@ -1,6 +1,3 @@
-import sys
-import time
-import logging
 import json
 
 from watchdog.observers import Observer
@@ -53,7 +50,7 @@ class FreshMiddleware(object):
                 ignored = True
 
         if not ignored:
-            if mimetype == 'application/json':
+            if request.path == '/__fresh__/' and mimetype == 'application/json':
                 items = json.loads(response.content)
                 if fresh and items.get('fresh') is not None:
                     fresh = False

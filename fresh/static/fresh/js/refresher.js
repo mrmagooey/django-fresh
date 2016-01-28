@@ -1,8 +1,19 @@
 (function(){
   function doRefresh() {
-    console.log('django-fresh: calling location.reload(true)...')
-    //setTimeout(function() { location.reload(true); }, 1000);
-    location.reload(true);
+    console.log('django-fresh: detected change')
+    // rather than refresh right away, wait until the server is back to normal by pinging
+    while (true) {
+      try {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open('GET', '__ping__/', false); // false for synchronous request
+        xmlHttp.send();
+        console.log('django-fresh: reload')
+        location.reload(true);
+        return;
+      } catch (e) {
+        // ignore
+      }
+    }
   }
 
   function checkRefresh() {
