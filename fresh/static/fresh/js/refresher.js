@@ -2,6 +2,7 @@
   var interval;
 
   function startRefresh() {
+    console.log('startRefresh')
     window.clearInterval(interval);
 
     // rather than refresh right away, wait until the server is back to normal,
@@ -13,12 +14,14 @@
         location.reload(true);
       }
     }
-    req.onerror = function() {
+    req.onerror = function(e) {
+      console.log('startRefresh onerror', e);
       window.setTimeout(startRefresh, 500);
-    }
+    };
   }
 
   function checkRefresh() {
+    console.log('checkRefresh')
       var req = new XMLHttpRequest();
 
       req.open('GET', '/__fresh__/', true);
@@ -32,7 +35,10 @@
               }
           }
       };
-      req.onerror = startRefresh;
+      req.onerror = function(e) {
+        console.log('checkRefresh onerror', e);
+        startRefresh();
+      };
       req.send();
   }
 
