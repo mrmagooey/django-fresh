@@ -60,7 +60,7 @@ class FreshMiddleware(object):
                     items['fresh'] = True
                     response.content = json.dumps(items)
             elif mimetype == 'text/html; charset=utf-8':
-                soup = BeautifulSoup(response.content)
+                soup = BeautifulSoup(response.content, "lxml")
                 if soup.head is not None:
                     url = settings.STATIC_URL + 'fresh/js/refresher.js'
                     script_fresh = soup.new_tag('script', src=url)
