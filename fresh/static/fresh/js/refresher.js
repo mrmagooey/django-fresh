@@ -1,18 +1,22 @@
 (function(){
+  var interval;
+
   function doRefresh() {
-    console.log('django-fresh: detected change')
-    // rather than refresh right away, wait until the server is back to normal by pinging
-    while (true) {
-      try {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open('GET', '__fresh__/', false); // false for synchronous request
-        xmlHttp.send();
-        console.log('django-fresh: reload')
-        location.reload(true);
-        return;
-      } catch (e) {
-        // ignore
+    window.clearInterval(interval);
+
+    // rather than refresh right away, wait until the server is back to normal,
+    // and then refresh
+    var xmlHttp = new XMLHttpRequest();
+    try {
+      xmlHttp.open('GET', '__fresh__/', true);
+      req.onreadystatechange = function () {
+        if (req.readyState == 4) { // done
+          location.reload(true);
+        }
       }
+      xmlHttp.send();
+    } catch (e) {
+      window.setTimeout(doRefresh, 500);
     }
   }
 
@@ -37,5 +41,6 @@
       }
   }
 
-  setInterval(checkRefresh, 1000);
+  // poll every 500ms
+  interval = window.setInterval(checkRefresh, 500);
 })();
