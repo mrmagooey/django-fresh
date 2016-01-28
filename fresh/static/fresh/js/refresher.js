@@ -13,7 +13,7 @@
         location.reload(true);
       }
     }
-    req.onerr = function() {
+    req.onerror = function() {
       window.setTimeout(startRefresh, 500);
     }
   }
@@ -32,10 +32,10 @@
               }
           }
       };
-      req.onerr = startRefresh;
+      req.onerror = startRefresh;
       req.send();
   }
 
   // poll every 500ms
-  interval = window.setInterval(checkRefresh, 500);
+  interval = window.setInterval(checkRefresh, 1000);
 })();
