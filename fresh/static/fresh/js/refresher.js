@@ -5,9 +5,14 @@
       try {
         req.open('GET', '/__fresh__/', true);
         req.onreadystatechange = function () {
-            if (req.readyState == 4) { // done
-                var fresh = JSON.parse(req.responseText).fresh;
-                if (fresh) location.reload();
+            try {
+              if (req.readyState == 4) { // done
+                  var fresh = JSON.parse(req.responseText).fresh;
+                  if (fresh) location.reload();
+              }
+            } catch (e) {
+              console.log(e);
+              location.reload();
             }
         };
         req.send();
