@@ -9,7 +9,7 @@
     // and then refresh
     var req = new XMLHttpRequest();
     req.open('GET', '__fresh__/', true);
-    req.onreadystatechange = function () {
+    req.onload = function () {
       if (req.readyState == 4) { // done
         location.reload(true);
       }
@@ -25,15 +25,15 @@
       var req = new XMLHttpRequest();
 
       req.open('GET', '/__fresh__/', true);
-      req.onreadystatechange = function () {
-          if (req.readyState == 4) { // done
-              try {
-                var fresh = JSON.parse(req.responseText).fresh;
-                if (fresh) startRefresh();
-              } catch (e) {
-                startRefresh();
-              }
+      req.onload = function () {
+        if (req.readyState == 4) { // done
+          try {
+            var fresh = JSON.parse(req.responseText).fresh;
+            if (fresh) startRefresh();
+          } catch (e) {
+            startRefresh();
           }
+        }
       };
       req.onerror = function(e) {
         console.log('checkRefresh onerror', e);
