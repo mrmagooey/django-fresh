@@ -4,6 +4,6 @@ from .views import fresh
 
 
 urlpatterns = patterns('',
-    url(r'^fresh/$', fresh, name='fresh'),
+    url(r'^__fresh__/$', fresh, name='fresh'),
 )
 
