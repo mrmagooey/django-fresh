@@ -42,6 +42,5 @@
       req.send();
   }
 
-  // poll every 500ms
   interval = window.setInterval(checkRefresh, 1000);
 })();
