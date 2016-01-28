@@ -1,9 +1,11 @@
 (function(){
   var interval;
+  var attempts = 0;
 
   function startRefresh() {
     console.log('startRefresh')
     window.clearInterval(interval);
+    attempts += 1;
 
     // rather than refresh right away, wait until the server is back to normal,
     // and then refresh
@@ -17,7 +19,10 @@
     }
     req.onerror = function(e) {
       console.log('startRefresh onerror', e);
-      window.setTimeout(startRefresh, 500);
+      // retry 10 times, then give up
+      if (attempts < 10) {
+        window.setTimeout(startRefresh, 1000);
+      }
     };
     req.send();
   }
