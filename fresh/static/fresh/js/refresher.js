@@ -1,4 +1,9 @@
 (function(){
+  function doRefresh() {
+    console.log('django-fresh: calling location.reload(true)...')
+    setTimeout(function() { location.reload(true); }, 1000);
+  }
+
   function checkRefresh() {
       var req = new XMLHttpRequest();
 
@@ -8,17 +13,15 @@
             try {
               if (req.readyState == 4) { // done
                   var fresh = JSON.parse(req.responseText).fresh;
-                  if (fresh) location.reload();
+                  if (fresh) doRefresh()
               }
             } catch (e) {
-              console.log(e);
-              location.reload();
+              doRefresh();
             }
         };
         req.send();
       } catch (e) {
-        console.log(e);
-        location.reload();
+        doRefresh();
       }
   }
 
