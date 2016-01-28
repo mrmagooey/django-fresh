@@ -1,9 +1,7 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from .views import fresh
 
-
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^__fresh__/$', fresh, name='fresh'),
-)
-
+]

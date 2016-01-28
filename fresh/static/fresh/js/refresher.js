@@ -1,7 +1,8 @@
 (function(){
   function doRefresh() {
     console.log('django-fresh: calling location.reload(true)...')
-    setTimeout(function() { location.reload(true); }, 1000);
+    //setTimeout(function() { location.reload(true); }, 1000);
+    location.reload(true);
   }
 
   function checkRefresh() {
