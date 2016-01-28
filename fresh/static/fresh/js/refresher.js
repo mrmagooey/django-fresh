@@ -11,6 +11,7 @@
     req.open('GET', '__fresh__/', true);
     req.onload = function () {
       if (req.readyState == 4) { // done
+        console.log('reload');
         location.reload(true);
       }
     }
