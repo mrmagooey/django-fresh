@@ -24,8 +24,12 @@
       req.open('GET', '/__fresh__/', true);
       req.onreadystatechange = function () {
           if (req.readyState == 4) { // done
-              var fresh = JSON.parse(req.responseText).fresh;
-              if (fresh) startRefresh()
+              try {
+                var fresh = JSON.parse(req.responseText).fresh;
+                if (fresh) startRefresh();
+              } catch (e) {
+                startRefresh();
+              }
           }
       };
       req.onerr = startRefresh;
