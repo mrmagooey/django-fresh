@@ -5,7 +5,7 @@
     while (true) {
       try {
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open('GET', '__ping__/', false); // false for synchronous request
+        xmlHttp.open('GET', '__fresh__/', false); // false for synchronous request
         xmlHttp.send();
         console.log('django-fresh: reload')
         location.reload(true);
