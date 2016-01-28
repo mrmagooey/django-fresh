@@ -22,6 +22,8 @@
       // retry for 10s, then give up
       if (attempts <= 10) {
         window.setTimeout(startRefresh, 1000);
+      } else {
+        console.log('More than 10 attempts to refresh -- giving up.');
       }
     };
     req.send();
