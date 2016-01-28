@@ -19,8 +19,8 @@
     }
     req.onerror = function(e) {
       console.log('startRefresh onerror', e);
-      // retry 10 times, then give up
-      if (attempts < 10) {
+      // retry for a minute, then give up
+      if (attempts < 60) {
         window.setTimeout(startRefresh, 1000);
       }
     };
