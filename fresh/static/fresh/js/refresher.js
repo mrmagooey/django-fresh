@@ -14,16 +14,18 @@
     req.onload = function () {
       if (req.readyState == 4) { // done
         console.log('reload');
-        location.reload(true);
+        window.location.reload(true);
       }
     }
     req.onerror = function(e) {
       console.log('startRefresh onerror', e);
-      // retry for 10s, then give up
-      if (attempts <= 10) {
-        window.setTimeout(startRefresh, 1000);
+      // retry, slower and slower
+      if (attempts <= 1) {
+        window.setTimeout(startRefresh, 1000 * attempts);
       } else {
-        console.log('More than 10 attempts to refresh -- giving up.');
+        document.open('text/html');
+        document.write('<!DOCTYPE HTML><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Timeout</title></head><body><h1>Timeout</h1><p>Django Fresh detected a change, tried to restart, but could not reach the server after 10 attempts.</body></html>');
+        document.close();
       }
     };
     req.send();
