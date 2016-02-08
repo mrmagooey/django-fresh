@@ -18,7 +18,7 @@
       }
     }
     req.onerror = function(e) {
-      console.log('startRefresh onerror', e);
+      console.log('startRefresh onerror:', e, 'attempts:', attempts);
       // retry, slower and slower
       if (attempts <= 100) {
         window.setTimeout(startRefresh, 1000 * attempts);
