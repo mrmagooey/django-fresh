@@ -20,11 +20,11 @@
     req.onerror = function(e) {
       console.log('startRefresh onerror', e);
       // retry, slower and slower
-      if (attempts <= 1) {
+      if (attempts <= 100) {
         window.setTimeout(startRefresh, 1000 * attempts);
       } else {
         document.open('text/html');
-        document.write('<!DOCTYPE HTML><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Timeout</title></head><body><h1>Timeout</h1><p>Django Fresh detected a change, tried to restart, but could not reach the server after 10 attempts.</body></html>');
+        document.write('<!DOCTYPE HTML><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Timeout</title></head><body><h1>DJango Fresh Timeout</h1><p><a href="https://github.com/grokstyle/django-fresh">Django Fresh</a> detected a change, tried to restart, but could not reach the server after 100 attempts.</p><p>Manually refresh when the server is up again.</p></body></html>');
         document.close();
       }
     };
