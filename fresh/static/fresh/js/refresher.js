@@ -13,6 +13,7 @@
     req.open('GET', '__fresh__/', true);
     req.onload = function () {
       if (req.readyState == 4) { // done
+        attempts = 0;
         console.log('reload');
         window.location.reload(true);
       }
