@@ -32,7 +32,6 @@
   }
 
   function checkRefresh() {
-    console.log('checkRefresh')
       var req = new XMLHttpRequest();
 
       req.open('GET', '/__fresh__/', true);
