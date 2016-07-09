@@ -69,7 +69,7 @@ class FreshMiddleware(object):
     def watcher(self):
         observer = Observer()
 
-        path = settings.SITE_ROOT
+        path = settings.BASE_DIR
         event_handler = RefreshEventHandler()
         observer.schedule(event_handler, path, recursive=True)
 
